@@ -1,0 +1,68 @@
+====================================================
+  LANCER L'APP INVENTAIRE SUR ANDROID (via Termux)
+====================================================
+
+PRÉREQUIS
+---------
+1. Installer Termux depuis F-Droid (https://f-droid.org)
+   (Ne pas utiliser la version Play Store, elle est obsolète)
+
+2. Installer un navigateur Android (Chrome, Firefox…)
+
+
+INSTALLATION (une seule fois)
+------------------------------
+Dans Termux, tapez ces commandes :
+
+  pkg update && pkg upgrade -y
+  pkg install python git -y
+  pip install flask gspread google-auth google-auth-oauthlib openpyxl
+
+Copier le dossier InventaireApp dans Termux :
+  - Depuis PC via USB : copiez le dossier dans /storage/emulated/0/
+  - Puis dans Termux :
+      termux-setup-storage
+      cp -r /storage/emulated/0/InventaireApp ~/InventaireApp
+
+
+LANCEMENT
+----------
+Dans Termux :
+
+  cd ~/InventaireApp
+  python app.py
+
+Puis ouvrez Chrome sur Android et allez à :
+  http://localhost:5000
+
+L'app s'affiche dans le navigateur, optimisée pour mobile.
+
+
+ACCÈS DEPUIS D'AUTRES APPAREILS (PC, tablette)
+------------------------------------------------
+Si vous voulez accéder depuis un PC sur le même réseau Wi-Fi,
+ouvrez dans Chrome sur PC :
+  http://[IP_DU_TELEPHONE]:5000
+
+Trouvez l'IP dans Paramètres > Wi-Fi > Détails du réseau.
+
+
+CREDENTIALS GOOGLE
+-------------------
+Placez votre fichier credentials.json dans le dossier InventaireApp.
+La première connexion ouvrira une page d'autorisation Google dans le navigateur.
+Acceptez, puis le fichier token.json sera créé automatiquement.
+
+
+ARRÊTER LE SERVEUR
+-------------------
+Dans Termux : appuyez sur Ctrl+C
+
+
+NOTES
+------
+- Le serveur Flask tourne uniquement quand Termux est ouvert.
+- Pour garder l'app active en arrière-plan : activer "Mode batterie sans restriction"
+  pour Termux dans les paramètres Android.
+- Les exports Excel sont sauvegardés dans : ~/InventaireApp/exports/
+====================================================

@@ -1,0 +1,85 @@
+=====================================================
+  DÉPLOIEMENT EN LIGNE — RAILWAY
+  Accessible depuis tous vos téléphones et PC
+=====================================================
+
+ÉTAPE 1 — CRÉER UN COMPTE DE SERVICE GOOGLE
+─────────────────────────────────────────────
+1. Allez sur : https://console.cloud.google.com
+2. Sélectionnez votre projet (celui qui a l'API Sheets activée)
+3. Menu : "IAM et administration" → "Comptes de service"
+4. Cliquez "+ CRÉER UN COMPTE DE SERVICE"
+   - Nom : inventaire-app
+   - Cliquez "Créer et continuer" puis "OK"
+5. Sur la ligne créée, cliquez sur les 3 points → "Gérer les clés"
+6. "AJOUTER UNE CLÉ" → "Créer une clé" → JSON → Télécharger
+   → Vous obtenez un fichier JSON (ex: inventaire-app-xxxxx.json)
+
+7. IMPORTANT : Partagez votre Google Sheet avec le compte de service
+   - Ouvrez le fichier JSON téléchargé
+   - Copiez la valeur de "client_email" (ex: inventaire-app@...iam.gserviceaccount.com)
+   - Ouvrez votre Google Sheet
+   - Bouton "Partager" → collez l'email → rôle "Éditeur" → Envoyer
+
+
+ÉTAPE 2 — METTRE LE CODE SUR GITHUB
+─────────────────────────────────────
+1. Créez un compte sur https://github.com si pas encore fait
+2. Créez un nouveau dépôt PRIVÉ "inventaire-app"
+3. Dans le dossier InventaireApp, ouvrez un terminal et tapez :
+
+   git init
+   git add .
+   git commit -m "Initial commit"
+   git remote add origin https://github.com/VOTRE_NOM/inventaire-app.git
+   git push -u origin main
+
+   ⚠ Le .gitignore protège automatiquement credentials.json, token.json,
+     service_account.json et .env — ils ne seront PAS envoyés sur GitHub.
+
+
+ÉTAPE 3 — DÉPLOYER SUR RAILWAY
+────────────────────────────────
+1. Allez sur https://railway.app
+2. Connectez-vous avec votre compte GitHub
+3. "New Project" → "Deploy from GitHub repo" → sélectionnez inventaire-app
+4. Railway détecte automatiquement Python et installe requirements_web.txt
+
+5. Allez dans l'onglet "Variables" du projet et ajoutez :
+
+   SPREADSHEET_ID   = 1NaVYWPF-rOSHe3sHn60iFNW78aPl16-bkT-ObWQvNrw
+
+   GOOGLE_SERVICE_ACCOUNT = (contenu entier du fichier JSON téléchargé)
+   → Ouvrez le fichier JSON, sélectionnez TOUT le contenu, collez-le
+
+6. Allez dans "Settings" → "Networking" → "Generate Domain"
+   → Vous obtenez une URL du type : https://inventaire-app-xxxx.railway.app
+
+
+ÉTAPE 4 — ACCÈS DEPUIS TOUS VOS APPAREILS
+──────────────────────────────────────────
+Ouvrez cette URL depuis n'importe quel navigateur :
+   https://inventaire-app-xxxx.railway.app
+
+📱 Sur Android — Ajouter à l'écran d'accueil :
+   Chrome → Menu (3 points) → "Ajouter à l'écran d'accueil"
+   → L'app apparaît comme une vraie icône sur votre téléphone !
+
+
+COÛTS
+──────
+Railway offre 5$ de crédit gratuit par mois.
+Une petite app Flask consomme ~0.50$/mois → GRATUIT en pratique.
+Au-delà : 5$/mois pour le plan Hobby.
+
+
+MISE À JOUR DU CODE
+────────────────────
+Après chaque modification dans le dossier :
+   git add .
+   git commit -m "description du changement"
+   git push
+
+Railway redéploie automatiquement en 1-2 minutes.
+
+=====================================================
