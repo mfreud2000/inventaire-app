@@ -109,7 +109,10 @@ def sync():
     except FileNotFoundError as e:
         return jsonify({"error": str(e)}), 400
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        import traceback
+        msg = f"{type(e).__name__}: {e}\n{traceback.format_exc()}"
+        logger.error(msg)
+        return jsonify({"error": msg}), 500
 
 
 @app.route("/api/switch_sheet", methods=["POST"])
